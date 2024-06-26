@@ -21,7 +21,7 @@ public class TransactionController {
     @PostMapping(path = "/transfer")
     @Operation(summary = "Transfer amount. Customer number and Debit and credit accounts must be active in the system.")
     @ApiResponse(responseCode = "200", description = "Transfer successful",
-            content = { @Content(mediaType = "text/plain",
+            content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = String.class)) })
     @ApiResponse(responseCode = "400", description = "Bad request",
             content = { @Content(mediaType = "application/json",
@@ -39,7 +39,7 @@ public class TransactionController {
     @PostMapping(path = "/withdraw")
     @Operation(summary = "Debit amount from an active account for an active customer")
     @ApiResponse(responseCode = "200", description = "Debit successful",
-            content = { @Content(mediaType = "text/plain",
+            content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = String.class)) })
     @ApiResponse(responseCode = "400", description = "Bad request",
             content = { @Content(mediaType = "application/json",
@@ -57,7 +57,7 @@ public class TransactionController {
     @PostMapping(path = "/deposit")
     @Operation(summary = "Credit amount from an active account for an active customer")
     @ApiResponse(responseCode = "200", description = "Credit successful",
-            content = { @Content(mediaType = "text/plain",
+            content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = String.class)) })
     @ApiResponse(responseCode = "400", description = "Bad request",
             content = { @Content(mediaType = "application/json",

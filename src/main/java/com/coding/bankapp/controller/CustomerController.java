@@ -68,7 +68,7 @@ public class CustomerController {
     @DeleteMapping(path = "/{customerNumber}")
     @Operation(summary = "Deactivate an active customer and close linked accounts")
     @ApiResponse(responseCode = "200", description = "Customer deactivated",
-            content = { @Content(mediaType = "text/plain",
+            content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = String.class)) })
     @ApiResponse(responseCode = "400", description = "Bad request",
             content = { @Content(mediaType = "application/json",

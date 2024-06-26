@@ -10,7 +10,7 @@ public class EventMessage {
 
     }
 
-    public static final String CUSTOMER_DOES_NOT_EXIST = "Customer Id: %d not found.";
+    public static final String CUSTOMER_DOES_NOT_EXIST = "Customer number: %d not found.";
     public static final String ACCOUNT_DOES_NOT_EXIST = "Account number %d not found.";
     public static final String INSUFFICIENT_FUNDS = "Insufficient funds in account: %d";
     public static final String INVALID_BRANCH_ID = "Invalid branch Id: %d";
