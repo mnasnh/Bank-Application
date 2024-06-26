@@ -1,0 +1,11 @@
+{
+  "branchName": "Branch 2",
+  "sortCode": "100-55",
+  "address": {
+    "addressLine1": "Line1",
+    "addressLine2": "Line2",
+    "city": "London",
+    "postCode": "SE10",
+    "country": "GB"
+  }
+}

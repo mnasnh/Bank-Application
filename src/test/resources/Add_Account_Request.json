@@ -1,0 +1,8 @@
+{
+  "accountNumber": 3001,
+  "balance": 1000,
+  "accountStatus": "ACTIVE",
+  "branchId": 1,
+  "accountType": "SAVINGS",
+  "openingDate": ""
+}

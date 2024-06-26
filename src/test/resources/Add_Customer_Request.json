@@ -1,0 +1,19 @@
+{
+  "firstName": "Jon",
+  "lastName": "Roe",
+  "middleName": "",
+  "customerNumber": 10001,
+  "status": "ENABLED",
+  "address": {
+    "addressLine1": "101 Milligan Street",
+    "addressLine2": "",
+    "city": "London",
+    "postCode": "SE10",
+    "country": "GB"
+  },
+  "contact": {
+    "workPhone": "77689004",
+    "homePhone": "77689004",
+    "emailId": "john.roe@gmail.com"
+  }
+}

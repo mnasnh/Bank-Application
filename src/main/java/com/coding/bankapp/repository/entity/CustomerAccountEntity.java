@@ -1,4 +1,4 @@
-package com.coding.bankapp.repository.dto;
+package com.coding.bankapp.repository.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +11,11 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-public class CustomerAccountDto {
+public class CustomerAccountEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="CUST_ACC_REF_ID")
-    private UUID id;
+    private Long id;
 
     private Long accountNumber;
 

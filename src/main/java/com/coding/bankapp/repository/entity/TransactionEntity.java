@@ -1,4 +1,4 @@
-package com.coding.bankapp.repository.dto;
+package com.coding.bankapp.repository.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-public class TransactionDto {
+public class TransactionEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="TX_ID")
@@ -23,7 +23,7 @@ public class TransactionDto {
 
     private Long accountNumber;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date transactionDate;
 
     private String transactionType;

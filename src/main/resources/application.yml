@@ -1,8 +1,5 @@
 server.port: 8080
 server.servlet.context-path: /bank-api
-springdoc:
-  swagger-ui:
-    path: /swagger-ui/html
 
 # Enabling H2 Console
 spring:

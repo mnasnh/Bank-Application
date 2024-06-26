@@ -1,4 +1,4 @@
-package com.coding.bankapp.model;
+package com.coding.bankapp.dto;
 
 import lombok.*;
 
@@ -13,4 +13,5 @@ public class TransferRequest {
     private Long fromAccountNumber;
     private Long toAccountNumber;
     private BigDecimal transferAmount;
+    private Long customerNumber;
 }
