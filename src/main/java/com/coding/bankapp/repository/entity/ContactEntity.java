@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -16,8 +14,8 @@ import java.util.UUID;
 @Entity
 public class ContactEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="CONTACT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTACT_ID")
     private Long id;
 
     private String emailId;
@@ -26,8 +24,7 @@ public class ContactEntity {
 
     private String workPhone;
 
-    public static ContactEntity from(Contact contact)
-    {
+    public static ContactEntity from(Contact contact) {
         return ContactEntity.builder().emailId(contact.getEmailId())
                 .homePhone(contact.getHomePhone()).workPhone(contact.getWorkPhone()).build();
     }

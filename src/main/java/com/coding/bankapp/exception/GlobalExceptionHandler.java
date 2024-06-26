@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("1000", ex.getErrorMessage());
         return ResponseEntity.status(HttpStatus.valueOf(ex.getHttpStatusCode().value())).body(errorResponse);
     }
+
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handleDataAccessException(DataAccessException ex) {
         ErrorResponse errorResponse = new ErrorResponse("1001", ex.getMessage());

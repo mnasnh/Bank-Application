@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface CustomerAccountRepository extends CrudRepository<CustomerAccountEntity, String> {
 
     Optional<List<CustomerAccountEntity>> findAllByCustomerNumber(Long customerNumber);
+
     Optional<CustomerAccountEntity> findByCustomerNumberAndAccountNumber(Long customerNumber, Long accountNumber);
 
     void deleteByCustomerNumber(Long customerNumber);

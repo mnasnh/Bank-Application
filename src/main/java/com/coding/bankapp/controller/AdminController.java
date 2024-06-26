@@ -25,17 +25,17 @@ public class AdminController {
     @PostMapping("/branches")
     @Operation(summary = "Add a branch")
     @ApiResponse(responseCode = "200", description = "Added branch",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Customer.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Customer.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     public Branch addBranch(@RequestBody Branch branch) {
 
-        BranchEntity branchEntity =  branchRepository.save(BranchEntity.from(branch));
+        BranchEntity branchEntity = branchRepository.save(BranchEntity.from(branch));
         return Branch.from(branchEntity);
     }
 
@@ -43,21 +43,19 @@ public class AdminController {
 
     @Operation(summary = "Get all branches")
     @ApiResponse(responseCode = "200", description = "Request successful",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = List.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = List.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     public List<Branch> getAllBranches() {
         List<Branch> branchList = new ArrayList<>();
         List<BranchEntity> branchEntities = (List<BranchEntity>) branchRepository.findAll();
-        if(branchEntities.isEmpty())
-        {
+        if (branchEntities.isEmpty()) {
             return branchList;
         }
-        branchEntities.forEach(branchEntity -> {
-            branchList.add(Branch.from(branchEntity));
-        });
+        branchEntities.forEach(branchEntity ->
+                branchList.add(Branch.from(branchEntity)));
 
         return branchList;
 

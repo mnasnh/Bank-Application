@@ -17,8 +17,8 @@ import java.util.Date;
 @Entity
 public class AccountEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="ACCT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ACCT_ID")
     private Long id;
 
     private Long accountNumber;

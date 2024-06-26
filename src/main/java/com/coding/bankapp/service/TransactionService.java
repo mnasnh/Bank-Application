@@ -8,8 +8,11 @@ import com.coding.bankapp.exception.BankApiException;
 import java.util.List;
 
 public interface TransactionService {
-     String transfer(TransferRequest transferRequest) throws BankApiException;
-     String deposit(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException;
-     String withdraw(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException;
-     List<Transaction> findTransactionsByAccountNumber(Long accountNumber);
+    String transfer(TransferRequest transferRequest) throws BankApiException;
+
+    String deposit(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException;
+
+    String withdraw(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException;
+
+    List<Transaction> findTransactionsByAccountNumber(Long accountNumber);
 }

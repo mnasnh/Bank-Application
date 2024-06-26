@@ -55,25 +55,23 @@ public class AccountServiceImpl implements AccountService {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(customerNumber));
         }
         AccountEntity accountEntity = AccountEntity.from(account);
-       Optional<BranchEntity> bankEntityOptional = branchRepository.findById(account.getBranchId());
-       if(!bankEntityOptional.isPresent())
-       {
-           throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.INVALID_BRANCH_ID.formatted(account.getBranchId()));
-       }
-       accountEntity.setBranchEntity(bankEntityOptional.get());
-       accountEntity.setCreateDateTime(new Date());
-       accountEntity.setUpdateDateTime(new Date());
-       AccountEntity saved = accountRepository.save(accountEntity);
-       CustomerAccountEntity customerAccountEntity = CustomerAccountEntity.builder().accountNumber(saved.getAccountNumber()).customerNumber(customerNumber).build();
-       customerAccountRepository.save(customerAccountEntity);
-       return Account.from(saved);
+        Optional<BranchEntity> bankEntityOptional = branchRepository.findById(account.getBranchId());
+        if (!bankEntityOptional.isPresent()) {
+            throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.INVALID_BRANCH_ID.formatted(account.getBranchId()));
+        }
+        accountEntity.setBranchEntity(bankEntityOptional.get());
+        accountEntity.setCreateDateTime(new Date());
+        accountEntity.setUpdateDateTime(new Date());
+        AccountEntity saved = accountRepository.save(accountEntity);
+        CustomerAccountEntity customerAccountEntity = CustomerAccountEntity.builder().accountNumber(saved.getAccountNumber()).customerNumber(customerNumber).build();
+        customerAccountRepository.save(customerAccountEntity);
+        return Account.from(saved);
     }
 
     @Override
     public String closeAccount(Long accountNumber) throws BankApiException {
         Optional<AccountEntity> accountEntityOpt = accountRepository.findByAccountNumberAndAccountStatus(accountNumber, AccountStatus.ACTIVE.toString());
-        if(!accountEntityOpt.isPresent())
-        {
+        if (!accountEntityOpt.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.ACCOUNT_DOES_NOT_EXIST.formatted(accountNumber));
         }
         AccountEntity accountEntity = accountEntityOpt.get();

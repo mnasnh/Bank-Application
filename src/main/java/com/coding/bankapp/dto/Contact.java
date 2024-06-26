@@ -13,8 +13,7 @@ public class Contact {
     private String homePhone;
     private String emailId;
 
-    public static Contact from(ContactEntity contactEntity)
-    {
+    public static Contact from(ContactEntity contactEntity) {
         return Contact.builder().emailId(contactEntity.getEmailId())
                 .homePhone(contactEntity.getHomePhone()).workPhone(contactEntity.getWorkPhone()).build();
     }

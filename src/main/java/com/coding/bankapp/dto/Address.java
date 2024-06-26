@@ -15,8 +15,7 @@ public class Address {
     private String postCode;
     private String country;
 
-    public static Address from(AddressEntity addressEntity)
-    {
+    public static Address from(AddressEntity addressEntity) {
         return Address.builder().addressLine1(addressEntity.getAddressLine1())
                 .addressLine2(addressEntity.getAddressLine2()).city(addressEntity.getCity())
                 .postCode(addressEntity.getPostCode()).country(addressEntity.getCountry()).build();

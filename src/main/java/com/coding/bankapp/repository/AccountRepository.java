@@ -14,6 +14,7 @@ public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
      * Find by account number and account status
      * Hold PESSIMISTIC_WRITE lock to prevent other transactions from
      * reading and updating the account balance.
+     *
      * @param accountNumber
      * @param status
      * @return

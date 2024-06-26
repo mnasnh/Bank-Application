@@ -1,7 +1,7 @@
 package com.coding.bankapp.dto;
 
-import com.coding.bankapp.enums.AccountType;
 import com.coding.bankapp.enums.AccountStatus;
+import com.coding.bankapp.enums.AccountType;
 import com.coding.bankapp.repository.entity.AccountEntity;
 import lombok.*;
 

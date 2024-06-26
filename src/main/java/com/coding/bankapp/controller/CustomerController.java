@@ -22,14 +22,14 @@ public class CustomerController {
     @GetMapping
     @Operation(summary = "Get all active customer details")
     @ApiResponse(responseCode = "200", description = "Get all customers",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = List.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = List.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
 
     public List<Customer> getAllCustomers() {
 
@@ -39,26 +39,27 @@ public class CustomerController {
     @PutMapping
     @Operation(summary = "Add a customer")
     @ApiResponse(responseCode = "200", description = "Added customer",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Customer.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Customer.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     public Customer addCustomer(@RequestBody Customer customer) {
 
         return customerService.addCustomer(customer);
     }
+
     @GetMapping(path = "/{customerNumber}")
     @Operation(summary = "Get customer detail by customer number")
     @ApiResponse(responseCode = "200", description = "Request successful",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Customer.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Customer.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
 
     public Customer getCustomer(@PathVariable Long customerNumber) {
 
@@ -68,17 +69,17 @@ public class CustomerController {
     @DeleteMapping(path = "/{customerNumber}")
     @Operation(summary = "Deactivate an active customer and close linked accounts")
     @ApiResponse(responseCode = "200", description = "Customer deactivated",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = String.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = String.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
 
     public String deleteCustomer(@PathVariable Long customerNumber) throws BankApiException {
 
-         return customerService.deleteCustomer(customerNumber);
+        return customerService.deleteCustomer(customerNumber);
     }
 }

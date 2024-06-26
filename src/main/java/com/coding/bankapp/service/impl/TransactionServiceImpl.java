@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,32 +46,27 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public String transfer(TransferRequest transferRequest) throws BankApiException {
         Optional<CustomerEntity> customerEntityOptional = customerRepository.findByCustomerNumberAndStatus(transferRequest.getCustomerNumber(), CustomerStatus.ENABLED.toString());
-        if(!customerEntityOptional.isPresent())
-        {
+        if (!customerEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(transferRequest.getCustomerNumber()));
         }
 
         Optional<AccountEntity> fromAccountEntityOptional = accountRepository.findByAccountNumberAndAccountStatus(transferRequest.getFromAccountNumber(), AccountStatus.ACTIVE.toString());
-        if(!fromAccountEntityOptional.isPresent())
-        {
+        if (!fromAccountEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.ACCOUNT_DOES_NOT_EXIST.formatted(transferRequest.getFromAccountNumber()));
 
         }
         Optional<CustomerAccountEntity> customerAccountEntityOptional = customerAccountRepository.findByCustomerNumberAndAccountNumber(transferRequest.getCustomerNumber(), transferRequest.getFromAccountNumber());
-        if(!customerAccountEntityOptional.isPresent())
-        {
+        if (!customerAccountEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.INCORRECT_ACCOUNT_FOR_CUSTOMER.formatted(transferRequest.getFromAccountNumber(), transferRequest.getCustomerNumber()));
         }
         Optional<AccountEntity> toAccountEntityOptional = accountRepository.findByAccountNumberAndAccountStatus(transferRequest.getToAccountNumber(), AccountStatus.ACTIVE.toString());
-        if(!toAccountEntityOptional.isPresent())
-        {
+        if (!toAccountEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.ACCOUNT_DOES_NOT_EXIST.formatted(transferRequest.getToAccountNumber()));
 
         }
-       AccountEntity fromAccountEntity = fromAccountEntityOptional.get();
+        AccountEntity fromAccountEntity = fromAccountEntityOptional.get();
         AccountEntity toAccountEntity = toAccountEntityOptional.get();
-        if(fromAccountEntity.getAccountBalance().compareTo(transferRequest.getTransferAmount())<0)
-        {
+        if (fromAccountEntity.getAccountBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.INSUFFICIENT_FUNDS.formatted(transferRequest.getFromAccountNumber()));
         }
         fromAccountEntity.setAccountBalance(fromAccountEntity.getAccountBalance().subtract(transferRequest.getTransferAmount()));
@@ -93,16 +89,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public String deposit(DepositWithdrawRequest  depositWithdrawRequest) throws BankApiException {
+    public String deposit(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException {
         Optional<CustomerEntity> customerEntityOptional = customerRepository.findByCustomerNumberAndStatus(depositWithdrawRequest.getCustomerNumber(), CustomerStatus.ENABLED.toString());
-        if(!customerEntityOptional.isPresent())
-        {
+        if (!customerEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(depositWithdrawRequest.getCustomerNumber()));
         }
 
         Optional<AccountEntity> accountEntityOptional = accountRepository.findByAccountNumberAndAccountStatus(depositWithdrawRequest.getAccountNumber(), AccountStatus.ACTIVE.toString());
-        if(!accountEntityOptional.isPresent())
-        {
+        if (!accountEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.ACCOUNT_DOES_NOT_EXIST.formatted(depositWithdrawRequest.getAccountNumber()));
 
         }
@@ -121,19 +115,16 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public String withdraw(DepositWithdrawRequest depositWithdrawRequest) throws BankApiException {
         Optional<CustomerEntity> customerEntityOptional = customerRepository.findByCustomerNumberAndStatus(depositWithdrawRequest.getCustomerNumber(), CustomerStatus.ENABLED.toString());
-        if(!customerEntityOptional.isPresent())
-        {
+        if (!customerEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(depositWithdrawRequest.getCustomerNumber()));
         }
         Optional<AccountEntity> accountEntityOptional = accountRepository.findByAccountNumberAndAccountStatus(depositWithdrawRequest.getAccountNumber(), AccountStatus.ACTIVE.toString());
-        if(!accountEntityOptional.isPresent())
-        {
+        if (!accountEntityOptional.isPresent()) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.ACCOUNT_DOES_NOT_EXIST.formatted(depositWithdrawRequest.getAccountNumber()));
 
         }
         AccountEntity accountEntity = accountEntityOptional.get();
-        if(accountEntity.getAccountBalance().compareTo(depositWithdrawRequest.getAmount())<0)
-        {
+        if (accountEntity.getAccountBalance().compareTo(depositWithdrawRequest.getAmount()) < 0) {
             throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.INSUFFICIENT_FUNDS.formatted(depositWithdrawRequest.getAccountNumber()));
         }
         Date txDate = new Date();
@@ -151,12 +142,12 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> findTransactionsByAccountNumber(Long accountNumber) {
         List<Transaction> transactionDetails = new ArrayList<>();
         Optional<AccountEntity> accountEntityOpt = accountRepository.findByAccountNumberAndAccountStatus(accountNumber, AccountStatus.ACTIVE.toString());
-        if(accountEntityOpt.isPresent()) {
+        if (accountEntityOpt.isPresent()) {
             Optional<List<TransactionEntity>> transactionEntitiesOpt = transactionRepository.findByAccountNumberOrderByTransactionDateDesc(accountNumber);
-            if(transactionEntitiesOpt.isPresent()) {
-                transactionEntitiesOpt.get().forEach(transactionEntity -> {
-                    transactionDetails.add(Transaction.from(transactionEntity));
-                });
+            if (transactionEntitiesOpt.isPresent()) {
+                transactionEntitiesOpt.get().forEach(transactionEntity ->
+                        transactionDetails.add(Transaction.from(transactionEntity))
+                );
             }
         }
 

@@ -34,15 +34,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
+
     @Override
     public List<Customer> findAll() {
         List<Customer> allCustomerDetails = new ArrayList<>();
+        Optional<List<CustomerEntity>> customerListOpt = customerRepository.findAllByStatus(CustomerStatus.ENABLED.toString());
+        if (customerListOpt.isPresent()) {
 
-        Iterable<CustomerEntity> customerList = customerRepository.findAllByStatus(CustomerStatus.ENABLED.toString()).get();
-
-        customerList.forEach(customerEntity -> {
-            allCustomerDetails.add(Customer.from(customerEntity));
-        });
+            customerListOpt.get().forEach(customerEntity ->
+                    allCustomerDetails.add(Customer.from(customerEntity))
+            );
+        }
 
         return allCustomerDetails;
     }
@@ -60,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findBy(Long customerNumber) {
         Optional<CustomerEntity> customerEntityOpt = customerRepository.findByCustomerNumberAndStatus(customerNumber, CustomerStatus.ENABLED.toString());
 
-        if(customerEntityOpt.isPresent()) {
+        if (customerEntityOpt.isPresent()) {
             return Customer.from(customerEntityOpt.get());
         }
 
@@ -74,33 +76,32 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String deleteCustomer(Long customerNumber) throws BankApiException {
-           Optional<CustomerEntity> customerEntityOptional = customerRepository.findByCustomerNumberAndStatus(customerNumber, CustomerStatus.ENABLED.toString());
-            if(!customerEntityOptional.isPresent())
-            {
-                throw new BankApiException(HttpStatusCode.valueOf(400),EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(customerNumber));
-            }
-            // Disable customer
-            CustomerEntity managedCustomerEntity = customerEntityOptional.get();
-            managedCustomerEntity.setStatus(CustomerStatus.DISABLED.toString());
-            managedCustomerEntity.setUpdateDateTime(new Date());
-            customerRepository.save(managedCustomerEntity);
-            // close  existing account
-            Optional<List<CustomerAccountEntity>> customerAccountEntityOptional = customerAccountRepository.findAllByCustomerNumber(customerNumber);
-            if (customerAccountEntityOptional.isPresent() && !customerAccountEntityOptional.get().isEmpty()) {
-                List<CustomerAccountEntity> entities = customerAccountEntityOptional.get();
-                entities.forEach(customerAccountEntity -> {
-                    Optional<AccountEntity> accountEntityOpt = accountRepository.findByAccountNumberAndAccountStatus(customerAccountEntity.getAccountNumber(), AccountStatus.ACTIVE.toString());
-                       if(accountEntityOpt.isPresent()) {
-                           AccountEntity accountEntity = accountEntityOpt.get();
-                           accountEntity.setAccountStatus(AccountStatus.CLOSED.toString());
-                           accountEntity.setUpdateDateTime(new Date());
-                           accountRepository.save(accountEntity);
-                       }
-                });
+        Optional<CustomerEntity> customerEntityOptional = customerRepository.findByCustomerNumberAndStatus(customerNumber, CustomerStatus.ENABLED.toString());
+        if (!customerEntityOptional.isPresent()) {
+            throw new BankApiException(HttpStatusCode.valueOf(400), EventMessage.CUSTOMER_DOES_NOT_EXIST.formatted(customerNumber));
+        }
+        // Disable customer
+        CustomerEntity managedCustomerEntity = customerEntityOptional.get();
+        managedCustomerEntity.setStatus(CustomerStatus.DISABLED.toString());
+        managedCustomerEntity.setUpdateDateTime(new Date());
+        customerRepository.save(managedCustomerEntity);
+        // close  existing account
+        Optional<List<CustomerAccountEntity>> customerAccountEntityOptional = customerAccountRepository.findAllByCustomerNumber(customerNumber);
+        if (customerAccountEntityOptional.isPresent() && !customerAccountEntityOptional.get().isEmpty()) {
+            List<CustomerAccountEntity> entities = customerAccountEntityOptional.get();
+            entities.forEach(customerAccountEntity -> {
+                Optional<AccountEntity> accountEntityOpt = accountRepository.findByAccountNumberAndAccountStatus(customerAccountEntity.getAccountNumber(), AccountStatus.ACTIVE.toString());
+                if (accountEntityOpt.isPresent()) {
+                    AccountEntity accountEntity = accountEntityOpt.get();
+                    accountEntity.setAccountStatus(AccountStatus.CLOSED.toString());
+                    accountEntity.setUpdateDateTime(new Date());
+                    accountRepository.save(accountEntity);
+                }
+            });
 
-            }
+        }
         // delete mapping of customer and account
-            customerAccountRepository.deleteByCustomerNumber(customerNumber);
-            return "Success: Customer deactivated.";
+        customerAccountRepository.deleteByCustomerNumber(customerNumber);
+        return "Success: Customer deactivated.";
     }
 }

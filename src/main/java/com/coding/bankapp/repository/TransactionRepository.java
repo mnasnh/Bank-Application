@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<TransactionEntity, String> {
-     Optional<List<TransactionEntity>> findByAccountNumberOrderByTransactionDateDesc(Long accountNumber);
+    Optional<List<TransactionEntity>> findByAccountNumberOrderByTransactionDateDesc(Long accountNumber);
 }

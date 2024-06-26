@@ -1,11 +1,10 @@
 package com.coding.bankapp.repository.entity;
 
 import com.coding.bankapp.dto.Customer;
+import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +14,8 @@ import java.util.UUID;
 @Entity
 public class CustomerEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="CUST_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CUST_ID")
     private Long id;
 
     private String firstName;
@@ -29,10 +28,10 @@ public class CustomerEntity {
 
     private String status;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private AddressEntity customerAddress;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private ContactEntity contact;
 
     @Temporal(TemporalType.TIMESTAMP)

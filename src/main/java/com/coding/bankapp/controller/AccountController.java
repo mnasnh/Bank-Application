@@ -22,45 +22,45 @@ public class AccountController {
     @GetMapping(path = "/{accountNumber}")
     @Operation(summary = "Get active account details by account number")
     @ApiResponse(responseCode = "200", description = "Found the account",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Account.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Account.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     public Account getByAccountNumber(@PathVariable Long accountNumber) {
 
         return accountService.findByAccountNumber(accountNumber);
     }
 
-    @PutMapping(path = "/{customerNumber}")
+    @PutMapping(path = "/customers/{customerNumber}")
     @Operation(summary = "Create a new account for existing active customer.")
     @ApiResponse(responseCode = "200", description = "Created new account",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Account.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Account.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
 
     public Account addNewAccount(@RequestBody Account account,
-                                                @PathVariable Long customerNumber) throws BankApiException {
+                                 @PathVariable Long customerNumber) throws BankApiException {
 
         return accountService.addNewAccount(account, customerNumber);
     }
 
-    @PostMapping(path = "/close/{accountNumber}")
+    @PostMapping(path = "/{accountNumber}/close")
     @Operation(summary = "Close an active account")
     @ApiResponse(responseCode = "200", description = "Closed",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = String.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = String.class))})
     @ApiResponse(responseCode = "400", description = "Bad request",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
     @ApiResponse(responseCode = "500", description = "Technical error",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))})
 
     public String closeAccount(@PathVariable Long accountNumber) throws BankApiException {
 

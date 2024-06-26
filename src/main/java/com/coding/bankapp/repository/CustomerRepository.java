@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
-     Optional<List<CustomerEntity>> findAllByStatus(String status);
-     Optional<CustomerEntity> findByCustomerNumberAndStatus(Long customerNumber, String status);
+    Optional<List<CustomerEntity>> findAllByStatus(String status);
+
+    Optional<CustomerEntity> findByCustomerNumberAndStatus(Long customerNumber, String status);
 }

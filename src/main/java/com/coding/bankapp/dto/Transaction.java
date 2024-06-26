@@ -2,10 +2,11 @@ package com.coding.bankapp.dto;
 
 import com.coding.bankapp.enums.TransactionType;
 import com.coding.bankapp.repository.entity.TransactionEntity;
-import java.util.Date;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
